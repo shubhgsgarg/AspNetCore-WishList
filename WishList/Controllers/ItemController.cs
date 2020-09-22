@@ -8,11 +8,11 @@ using WishList.Models;
 
 namespace WishList.Controllers
 {
-    public class ItemController1 : Controller
+    public class ItemController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ItemController1(ApplicationDbContext context)
+        public ItemController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -38,7 +38,9 @@ namespace WishList.Controllers
 
         public IActionResult Delete(int Id)
         {
-            
+            var item = _context.Items.FirstOrDefault(e => e.Id == Id);
+            _context.Items.Remove(item);
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
     }
